@@ -1,0 +1,20 @@
+[package]
+name = "dubai_time"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Actix Web for building the HTTP server
+actix-web = "4.0"
+
+# Tokio runtime for asynchronous operations
+tokio = { version = "1", features = ["full"] }
+
+# Chrono for handling and formatting date and time
+chrono = "0.4"
+
+# Serde for JSON serialization and deserialization
+serde = { version = "1.0", features = ["derive"] }
+
+# Serde JSON for working with JSON data
+serde_json = "1.0"
