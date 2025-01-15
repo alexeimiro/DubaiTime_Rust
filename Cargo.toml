@@ -18,3 +18,4 @@ serde = { version = "1.0", features = ["derive"] }
 
 # Serde JSON for working with JSON data
 serde_json = "1.0"
+actix-cors = "0.6"
