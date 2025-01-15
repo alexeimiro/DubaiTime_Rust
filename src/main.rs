@@ -1,7 +1,7 @@
 use actix_web::{web, App, HttpServer, Responder};
+use actix_cors::Cors;
 use chrono::prelude::*;
 use serde::Serialize;
-use std::sync::Arc;
 
 #[derive(Serialize)]
 struct TimeResponse {
@@ -22,14 +22,17 @@ async fn get_dubai_time() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let app_data = Arc::new(());
+    // Use environment variables or default to localhost:8080
+    let host = std::env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+    let port = std::env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let address = format!("{}:{}", host, port);
 
-    HttpServer::new(move || {
+    HttpServer::new(|| {
         App::new()
-            .app_data(web::Data::new(app_data.clone()))
+            .wrap(Cors::default().allow_any_origin().allow_any_method().allow_any_header())
             .route("/api/dubai-time", web::get().to(get_dubai_time))
     })
-    .bind("127.0.0.1:8080")?
+    .bind(address)?
     .run()
     .await
 }
